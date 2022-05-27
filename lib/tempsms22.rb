@@ -5,6 +5,7 @@
 # description: Scrapes the temporary SMS number from receive-smss.com.
 
 require 'nokorexi'
+require 'ostruct'
 
 
 class TempSMS22
@@ -23,10 +24,10 @@ class TempSMS22
     table = doc.root.element('//table')
 
     a = table.xpath('tbody/tr').map do |x|
-      x.xpath('td').map {|y| y.plaintext }
+      x.xpath('td').map {|y| y.plaintext.strip }
     end
 
-    a.map {|x| %i(from text date).zip(x).to_h }
+    a.map {|x| OpenStruct.new(%i(from text date).zip(x).to_h) }
 
   end
 
