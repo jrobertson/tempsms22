@@ -41,7 +41,7 @@ class TempSMS22
       x.attributes[:href]
     end
 
-    @number = a.first[/\d+/]
+    @number = a.sample[/\d+/]
   end
 
 end
