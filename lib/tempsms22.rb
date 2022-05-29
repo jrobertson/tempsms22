@@ -10,16 +10,32 @@ require 'ostruct'
 
 class TempSMS22
 
-  attr_reader :number
+  attr_accessor :number
 
   def initialize()
+
     @url = 'https://receive-smss.com/'
+
+    doc = Nokorexi.new(@url).to_doc
+
+    @a = doc.root.xpath('//a[@class="number-boxes1-item-button"]').map  do |x|
+      x.attributes[:href][/\d+/]
+    end
+
     get_smsnum()
   end
 
-  def read()
+  def number()
+    @number = @a.sample
+  end
 
-    url = @url + 'sms/' + @number + '/'
+  def numbers()
+    @a
+  end
+
+  def read(number=@number)
+
+    url = @url + 'sms/' + number + '/'
     doc = Nokorexi.new(url).to_doc
     table = doc.root.element('//table')
 
@@ -29,19 +45,6 @@ class TempSMS22
 
     a.map {|x| OpenStruct.new(%i(from text date).zip(x).to_h) }
 
-  end
-
-  private
-
-  def get_smsnum()
-
-    doc = Nokorexi.new(@url).to_doc
-
-    a = doc.root.xpath('//a[@class="number-boxes1-item-button"]').map  do |x|
-      x.attributes[:href]
-    end
-
-    @number = a.sample[/\d+/]
   end
 
 end
