@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'tempsms22'
-  s.version = '0.1.3'
+  s.version = '0.1.4'
   s.summary = 'Scrapes the temporary SMS number from receive-smss.com.'
   s.authors = ['James Robertson']
   s.files = Dir["lib/tempsms22.rb"]

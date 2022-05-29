@@ -22,7 +22,6 @@ class TempSMS22
       x.attributes[:href][/\d+/]
     end
 
-    get_smsnum()
   end
 
   def number()
